@@ -12,6 +12,7 @@ public class Main {
 
 
         System.out.println(patientQueue.toString());
+        System.out.println(patientQueue.size());
 
         System.out.println(patientQueue.pop());
         System.out.println(patientQueue.pop());
@@ -21,7 +22,7 @@ public class Main {
 
         System.out.println(patientQueue.pop());
         System.out.println(patientQueue.pop());
-
+        System.out.println(patientQueue.size());
 
     }
 }

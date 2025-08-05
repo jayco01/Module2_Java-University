@@ -8,13 +8,15 @@ public class ArrayPriorityQueue<T extends HasPriority> implements PriorityQueue<
     // TODO: Implement Array Prio Queue using an array as the data storage
 
     private T[] data;
+    private int capacity;
     private int size;
 
-    public ArrayPriorityQueue( Class<T> tClass,int size) {
+    public ArrayPriorityQueue( Class<T> tClass,int capacity ) {
         try
         {
-            this.size = size;
-            data = (T[]) Array.newInstance(tClass,size);
+            this.capacity = capacity;
+            data = (T[]) Array.newInstance(tClass,capacity);
+            this.size = 0;
         }
         catch (Exception e)
         {
@@ -26,13 +28,12 @@ public class ArrayPriorityQueue<T extends HasPriority> implements PriorityQueue<
     @Override
     public void put(T elem) {
         T[] newTArray;
-        int newSize;
+        int newCapacity;
 
-        if (data[size-1] != null) {
-            newSize = size + 1;
-            newTArray = (T[]) Array.newInstance(elem.getClass(), newSize);
+        if (data[capacity-1] != null) {
+            newCapacity = capacity + 1;
+            newTArray = (T[]) Array.newInstance(elem.getClass(), newCapacity);
         } else {
-            newSize = data.length;
             newTArray = data;
         }
 
@@ -54,26 +55,8 @@ public class ArrayPriorityQueue<T extends HasPriority> implements PriorityQueue<
                 }
             }
         }
+        size++;
         data = newTArray;
-
-
-//        else {
-//            for (int i = size - 1; i >= 0 ; i--) {
-//                if (data[i] == null) {
-//                    continue;
-//                }
-//                else if(elem.getPriority() >= data[i].getPriority() ) {
-//                    newTArray[i + 1] = elem;
-//                    newTArray[i] = data[i];
-//                    i--;
-//                }
-//                else {
-//                    newTArray[i + 1] = data[i];
-//                }
-//            }
-//            data = newTArray;
-//        }
-
     }
 
     @Override
@@ -83,9 +66,10 @@ public class ArrayPriorityQueue<T extends HasPriority> implements PriorityQueue<
             return null;
         }
 
-        for (int i = 0; i < size - 1 ; i++) {
+        for (int i = 0; i < capacity - 1 ; i++) {
             data[i] = data[i + 1];
         }
+        size--;
         return temp;
     }
 
