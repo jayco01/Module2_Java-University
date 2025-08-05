@@ -7,7 +7,7 @@ public class ArrayPriorityQueue<T extends HasPriority> implements PriorityQueue<
 
     @Override
     public void put(T elem) {
-        // elem.getPriority()
+         elem.getPriority();
     }
 
     @Override
