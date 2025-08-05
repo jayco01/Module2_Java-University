@@ -27,37 +27,21 @@ public class ArrayPriorityQueue<T extends HasPriority> implements PriorityQueue<
 
     @Override
     public void put(T elem) {
-        T[] newTArray;
-        int newCapacity;
-
-        if (data[capacity-1] != null) {
-            newCapacity = capacity + 1;
-            newTArray = (T[]) Array.newInstance(elem.getClass(), newCapacity);
-        } else {
-            newTArray = data;
+        if (size == capacity) {
+            enlargeArrayCapacity();
         }
 
-        if(data[0] == null) {
-            data[0] = elem;
+        int index = size - 1;
+        while (index >= 0 && data[index].getPriority() < elem.getPriority()) {
+            data[index + 1] = data[index];
+            index--;
         }
-        else {
-            for (int i = data.length - 1; i >= 0 ; i--) {
-                if (data[i] == null) { continue; }
 
-                if (data[i].getPriority() >= elem.getPriority()) {
-                    newTArray[i+1] = elem;
-                    newTArray[i] = data[i];
-                } else {
-                    newTArray[i+1] = data[i];
-                    if (i == 0) {
-                        newTArray[i] = elem;
-                    }
-                }
-            }
-        }
+        data[index + 1] = elem;
         size++;
-        data = newTArray;
     }
+
+
 
     @Override
     public T pop() {
@@ -67,14 +51,21 @@ public class ArrayPriorityQueue<T extends HasPriority> implements PriorityQueue<
 
         T highestPrio = data[0];
 
-        for (int i = 0; i < capacity - 1 ; i++) {
+        // shift all elements to the left/beginning
+        for (int i = 0; i < size - 1 ; i++) {
             data[i] = data[i + 1];
         }
+
         size--;
-        data[size] = null;
+        data[size] = null;//delete last value
+
+        if (size <= capacity/4) {
+            shrinkArrayCapacity();
+        }
 
         return highestPrio;
     }
+
 
     @Override
     public int size() {
@@ -86,5 +77,18 @@ public class ArrayPriorityQueue<T extends HasPriority> implements PriorityQueue<
         return "ArrayPriorityQueue{" +
                 "data=" + Arrays.toString(data) +
                 '}';
+    }
+
+    public void enlargeArrayCapacity() {
+        capacity *= 2;
+        T[] newArray = (T[]) Array.newInstance(data.getClass(), capacity);
+        System.arraycopy(data, 0, newArray, 0, size);
+        data = newArray;
+    }
+
+    private void shrinkArrayCapacity() {
+        T[] newTArray = (T[]) Array.newInstance(data.getClass().getComponentType(), capacity/2);
+        System.arraycopy(data, 0, newTArray, 0, size);
+        data = newTArray;
     }
 }
