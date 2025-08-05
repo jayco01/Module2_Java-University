@@ -79,6 +79,11 @@ public class ArrayPriorityQueue<T extends HasPriority> implements PriorityQueue<
                 '}';
     }
 
+    @Override
+    public int getCapacity() {
+        return capacity;
+    }
+
     public void enlargeArrayCapacity() {
         capacity *= 2;
         T[] newArray = (T[]) Array.newInstance(data.getClass(), capacity);
@@ -87,7 +92,8 @@ public class ArrayPriorityQueue<T extends HasPriority> implements PriorityQueue<
     }
 
     private void shrinkArrayCapacity() {
-        T[] newTArray = (T[]) Array.newInstance(data.getClass().getComponentType(), capacity/2);
+        capacity /= 2;
+        T[] newTArray = (T[]) Array.newInstance(data.getClass().getComponentType(), capacity);
         System.arraycopy(data, 0, newTArray, 0, size);
         data = newTArray;
     }
