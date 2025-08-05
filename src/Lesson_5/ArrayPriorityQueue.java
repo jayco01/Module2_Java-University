@@ -40,7 +40,11 @@ public class ArrayPriorityQueue<T extends HasPriority> implements PriorityQueue<
 
     @Override
     public T pop() {
-
+        T temp = data[0];
+        for (int i = 0; i < size - 1 ; i--) {
+            data[i] = data[i + 1];
+        }
+        return temp;
     }
 
     @Override
