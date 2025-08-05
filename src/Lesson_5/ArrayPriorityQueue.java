@@ -61,16 +61,19 @@ public class ArrayPriorityQueue<T extends HasPriority> implements PriorityQueue<
 
     @Override
     public T pop() {
-        T temp = data[0];
-        if(data[0] == null) {
+        if(data[0] == null || size == 0) {
             return null;
         }
+
+        T highestPrio = data[0];
 
         for (int i = 0; i < capacity - 1 ; i++) {
             data[i] = data[i + 1];
         }
         size--;
-        return temp;
+        data[size] = null;
+
+        return highestPrio;
     }
 
     @Override
