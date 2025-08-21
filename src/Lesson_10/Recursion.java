@@ -6,6 +6,7 @@ import java.util.Arrays;
 public class Recursion {
     // Sum the digits of an Integer
     public static int sumDigitsOfInt(int number) {
+        if (number < 10) { return number; }
         int sum = 0;
 
         return recursiveSumDigitsOfInt(sum, number);
