@@ -2,8 +2,28 @@ package Lesson_10;
 
 import java.util.Arrays;
 
-// Count the number of occurrence of a char in a string
+
 public class Recursion {
+    // Sum the digits of an Integer
+    public static int sumDigitsOfInt(int number) {
+        int sum = 0;
+
+        return recursiveSumDigitsOfInt(sum, number);
+    }
+
+    private static int recursiveSumDigitsOfInt(int sum, int number) {
+        int digit = number % 10;
+
+        if (digit <= 0) { return sum; }
+
+        sum += digit;
+        number = number / 10;
+
+        return recursiveSumDigitsOfInt(sum, number);
+    }
+
+
+    // Count the number of occurrence of a char in a string
     public static int countCharOccurrences(String str, char ch) {
         int count = 0;
         int index = 0;
@@ -13,6 +33,7 @@ public class Recursion {
 
     private static int recursiveCountCharOccurrences(char ch, int count, String str, int index) {
         if (index == str.length()) {return count;}
+
         char lowerCh = Character.toLowerCase(ch);
         char lowerStrCh = Character.toLowerCase(str.charAt(index));
         if(Character.compare(lowerCh, lowerStrCh) == 0) count++;
